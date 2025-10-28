@@ -182,30 +182,33 @@ void mainMenu() {
         
         checkFile();
         short options;
-        printf ("\nMENU PRINCIPAL\n");
-        printf ("Eslha a opção desejada\n");
-        printf ("1 - Nova Venda\n");
-        //printf ("2 - Registrar parcela\n");
-	//printf ("10 - Finalizar o programa\n");
-        scanf ("%hi", &options);
+        
+        while (1) {
+                
+                printf ("\nMENU PRINCIPAL\n");
+                printf ("Eslha a opção desejada\n");
+                printf ("1 - Nova Venda\n");
+                //printf ("2 - Registrar parcela paga\n");
+	        printf ("10 - Finalizar o programa\n");
+                scanf ("%hi", &options);
 
-        switch (options) {
-                case 1:
-                        salesMenu();
-                        break;
-                /*case 2:
-                        printf ("Opção AINDA não existe. Voltando ao menu principal\n");
-                        sleep(1);
-                        mainMenu();
-                        break;
-		case 10: 
-			stopProgram();
-			break;
-                */default:
-                        printf("Escolha uma opção válida. Voltando ao menu principal\n");
-                        sleep(1);
-                        mainMenu();
-                        break;
+
+                switch (options) {
+                        case 1:
+                                salesMenu();
+                                break;
+                        /*case 2:
+                                printf ("Opção AINDA não existe. Voltando ao menu principal\n");
+                                sleep(1);
+                                mainMenu();
+                                break;
+		        */case 10: 
+			        stopProgram();
+                        default:
+                                printf("Escolha uma opção válida. Voltando ao menu principal\n");
+                                sleep(1);
+                                break;
+                }
         }
 }
 
