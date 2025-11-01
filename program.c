@@ -5,10 +5,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "Headers/checks.h"
+#include "Headers/db.h"
 
-void mainMenu();
+void main_menu();
 
-void stopProgram() {
+void stop_program() {
 	
 	printf ("\nFinalizando o programa\n");
 	sleep(1);
@@ -20,7 +21,7 @@ void stopProgram() {
 const char *filename = "dbfile";
 FILE *file;
 
-int checkFile() {
+int check_file() {
 
         if (access(filename, F_OK) != 0) {
                 printf ("Arquivo usado como banco de dados não existe. Saindo...\n");
@@ -39,7 +40,7 @@ int checkFile() {
 return 0;
 }
 
-void cashSale() {
+void cash_sale() {
         //short options;
         printf ("\nMENU VENDA A VISTA\n");
 
@@ -65,13 +66,8 @@ void cashSale() {
         clientName[strcspn(clientName, "\n")] = '\0';
 
         //printf ("\nDADOS DA VENDA\n O ID: %d.\n Descrição: %s.\n Valor: %.2f.\n Cliete: %s.\n", idPeca, descriptionPeca, pricePeca, clientName);
-        file = fopen(filename, "a");
-        fprintf(file, "%d;%s;%.2f;%s\n", idPeca, descriptionPeca, pricePeca, clientName);
-        fclose(file);
-        printf ("\nDADOS DA VENDA\n O ID: %d.\n Descrição: %s.\n Valor: %.2f.\n Cliete: %s.\n", idPeca, descriptionPeca, pricePeca, clientName);
-        printf ("Dados inseridos no banco de dados\n");
-        
-        //insertDbFile(idPeca, descriptionPeca, pricePeca, clientName);
+
+        insert_cache_sale_db(filename, file, idPeca, descriptionPeca, pricePeca, clientName);
 
         short options;
         printf ("\n0 - Voltar ao menu principal\n");
@@ -80,21 +76,21 @@ void cashSale() {
 
         switch (options) {
                 case 0: 
-                        mainMenu();
+                        main_menu();
 		case 10: 
-			stopProgram();
+			stop_program();
 			break;
                 default:
                         printf("Escolha uma opção válida. Voltando ao menu principal\n");
                         sleep(1);
-                        mainMenu();
+                        main_menu();
                         break;
         }
 
 
 }
 
-void creditSale() {
+void credit_sale() {
 
         printf ("\nMENU VENDA PARCELADA\n");
 
@@ -116,18 +112,14 @@ void creditSale() {
         printf ("Digite a quantidade de parcelas: ");
         int installments = intValidation();
 
-        int installmentsValue = pricePeca / installments;
+        float installmentsValue = pricePeca / installments;
 
         printf ("Digite o nome do cliente: ");
         //scanf ("%[^\n]%*c", clientName);
         fgets (clientName, 50, stdin);
         clientName[strcspn(clientName, "\n")] = '\0';
 
-        file = fopen(filename, "a");
-        fprintf(file, "%d;%s;%.2f;%d;%d;%s\n", idPeca, descriptionPeca, pricePeca, installments, installmentsValue, clientName);
-        fclose(file);
-        printf ("\nDADOS DA VENDA\n O ID: %d.\n Descrição: %s.\n Valor: %.2f.\n Parcelas: %d\n Valor da Parcela: %d\n Cliete: %s.\n", idPeca, descriptionPeca, pricePeca, installments, installmentsValue, clientName);
-        printf ("Dados inseridos no banco de dados\n");
+        insert_credit_sale_db(filename, file, idPeca, descriptionPeca, pricePeca, installments, installmentsValue, clientName);
 
         short options;
         printf ("\n0 - Voltar ao menu principal\n");
@@ -136,20 +128,20 @@ void creditSale() {
 
         switch (options) {
                 case 0: 
-                        mainMenu();
+                        main_menu();
 		case 10: 
-			stopProgram();
+			stop_program();
 			break;
                 default:
                         printf("Escolha uma opção válida. Voltando ao menu principal\n");
                         sleep(1);
-                        mainMenu();
+                        main_menu();
                         break;
         }
 
 }
 
-void salesMenu() {
+void sales_menu() {
 
         short options;
         printf ("\nMENU DO CONTROLE DE VENDAS\n");
@@ -162,25 +154,25 @@ void salesMenu() {
 
         switch (options) {
                 case 0:
-                        mainMenu();
+                        main_menu();
                 case 1: 
-                        cashSale();
+                        cash_sale();
                 case 2:
-                        creditSale();
+                        credit_sale();
 		case 10: 
-			stopProgram();
+			stop_program();
                         break;
                 default:
                        printf("Escolha uma opção válida\n");
                        sleep(1);
-                       salesMenu();
+                       sales_menu();
 
         }
 }
 
-void mainMenu() {
+void main_menu() {
         
-        checkFile();
+        check_file();
         short options;
         
         while (1) {
@@ -195,15 +187,15 @@ void mainMenu() {
 
                 switch (options) {
                         case 1:
-                                salesMenu();
+                                sales_menu();
                                 break;
                         /*case 2:
                                 printf ("Opção AINDA não existe. Voltando ao menu principal\n");
                                 sleep(1);
-                                mainMenu();
+                                main_menu();
                                 break;
 		        */case 10: 
-			        stopProgram();
+			        stop_program();
                         default:
                                 printf("Escolha uma opção válida. Voltando ao menu principal\n");
                                 sleep(1);
@@ -215,6 +207,6 @@ void mainMenu() {
 int main() {
 
         printf ("CONTROLE DE VENDA ESSENZA - By Lucas Araujo\n");
-        mainMenu();
+        main_menu();
 return 0;
 }
