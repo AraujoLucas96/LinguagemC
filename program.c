@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "Headers/checks.h"
+#include "Headers/control.h"
 #include "Headers/db.h"
 
 void main_menu();
@@ -40,34 +39,44 @@ int check_file() {
 return 0;
 }
 
-void cash_sale() {
+void cash_sale_menu() {
         //short options;
         printf ("\nMENU VENDA A VISTA\n");
 
-        
+        char idPeca [250];
         char descriptionPeca[250];
         float pricePeca;
         char clientName[50];
 
+        getchar();
         printf ("Digite o ID da peça: ");
-        getchar();
-        int idPeca = intValidation();
+        //int idPeca = int_validation();
+        fgets (idPeca, 250, stdin);
+        idPeca[strcspn(idPeca, "\n")] = '\0';
 
-        printf ("Digite a descrição: ");
-        stringValidation(descriptionPeca, 250);
-        
-        printf ("Digite o valor da peça: ");
-        scanf ("%f", &pricePeca);
-        getchar();
-        
         printf ("Digite o nome do cliente: ");
         //scanf ("%[^\n]%*c", clientName);
         fgets (clientName, 50, stdin);
         clientName[strcspn(clientName, "\n")] = '\0';
+        to_lower_string(clientName);
+
+        printf ("Digite a descrição: ");
+        string_validation(descriptionPeca, 250);
+        to_lower_string(descriptionPeca);
+        
+        printf ("Digite o valor da peça: ");
+        scanf ("%f", &pricePeca);
+        getchar();
 
         //printf ("\nDADOS DA VENDA\n O ID: %d.\n Descrição: %s.\n Valor: %.2f.\n Cliete: %s.\n", idPeca, descriptionPeca, pricePeca, clientName);
 
-        insert_cache_sale_db(filename, file, idPeca, descriptionPeca, pricePeca, clientName);
+        short installments = 1;
+        float installmentsValue = pricePeca;
+        char paymentMethod [11] = "a vista";
+        int paidInstallments = 1;
+        short remaining = 0;
+
+        insert_db(idPeca, clientName, descriptionPeca, pricePeca, paymentMethod, installments, paidInstallments, installmentsValue, remaining);
 
         short options;
         printf ("\n0 - Voltar ao menu principal\n");
@@ -90,36 +99,45 @@ void cash_sale() {
 
 }
 
-void credit_sale() {
+void credit_sale_menu() {
 
         printf ("\nMENU VENDA PARCELADA\n");
 
+        char idPeca [250];
         char descriptionPeca[250];
         float pricePeca;
         char clientName[50];
-
-        printf ("Digite o ID da peça: ");
+        
         getchar();
-        int idPeca = intValidation();
+        printf ("Digite o ID da peça: ");
+        fgets (idPeca, 250, stdin);
+        idPeca[strcspn(idPeca, "\n")] = '\0';
 
-        printf ("Digite a descrição: ");
-        stringValidation(descriptionPeca, 250);
+        printf ("Digite o nome do cliente: ");
+        //scanf ("%[^\n]%*c", clientName);
+        fgets (clientName, 50, stdin);
+        clientName[strcspn(clientName, "\n")] = '\0';
+        to_lower_string(clientName);
+
+        printf ("Digite a descrição da peça: ");
+        string_validation(descriptionPeca, 250);
+        to_lower_string(descriptionPeca);
         
         printf ("Digite o valor da peça: ");
         scanf ("%f", &pricePeca);
         //getchar();
 
         printf ("Digite a quantidade de parcelas: ");
-        int installments = intValidation();
+        short installments = int_validation();
 
         float installmentsValue = pricePeca / installments;
+        char paymentMethod [11] = "parcelado";
+        int paidInstallments = 0;
+        float remaining = pricePeca;
 
-        printf ("Digite o nome do cliente: ");
-        //scanf ("%[^\n]%*c", clientName);
-        fgets (clientName, 50, stdin);
-        clientName[strcspn(clientName, "\n")] = '\0';
+        //printf ("Saldo devedor: %.2f", remaining);
 
-        insert_credit_sale_db(filename, file, idPeca, descriptionPeca, pricePeca, installments, installmentsValue, clientName);
+        insert_db(idPeca, clientName, descriptionPeca, pricePeca, paymentMethod, installments, paidInstallments, installmentsValue, remaining);
 
         short options;
         printf ("\n0 - Voltar ao menu principal\n");
@@ -156,9 +174,9 @@ void sales_menu() {
                 case 0:
                         main_menu();
                 case 1: 
-                        cash_sale();
+                        cash_sale_menu();
                 case 2:
-                        credit_sale();
+                        credit_sale_menu();
 		case 10: 
 			stop_program();
                         break;

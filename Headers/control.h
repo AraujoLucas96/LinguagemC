@@ -1,4 +1,4 @@
-int intValidation() {
+int int_validation() {
         
         int value;
         char input[100]; // Variable to buffer user input as a string      
@@ -13,7 +13,7 @@ int intValidation() {
 return value;
 }
 
-void stringValidation(char *value, int maxSize) {
+void string_validation(char *value, int maxSize) {
     char input[250];
     int check;
     
@@ -42,5 +42,13 @@ void stringValidation(char *value, int maxSize) {
         } else {
             printf("Valor inválido. Use apenas letras: ");
         }
+    }
+}
+
+void to_lower_string (char *str) {
+
+    while (*str) {
+        *str = tolower(*str);
+        str++;
     }
 }
