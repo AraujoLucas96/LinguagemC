@@ -43,39 +43,39 @@ void cash_sale_menu() {
         //short options;
         printf ("\nMENU VENDA A VISTA\n");
 
-        char idPeca [250];
-        char descriptionPeca[250];
-        float pricePeca;
-        char clientName[50];
+        char id_peca [250];
+        char descricao_peca[250];
+        float preco_peca;
+        char nome_cliente[50];
 
         getchar();
         printf ("Digite o ID da peça: ");
-        fgets (idPeca, 250, stdin);
-        idPeca[strcspn(idPeca, "\n")] = '\0';
+        fgets (id_peca, 250, stdin);
+        id_peca[strcspn(id_peca, "\n")] = '\0';
 
         printf ("Digite o nome do cliente: ");
-        //scanf ("%[^\n]%*c", clientName);
-        fgets (clientName, 50, stdin);
-        clientName[strcspn(clientName, "\n")] = '\0';
-        to_lower_string(clientName);
+        //scanf ("%[^\n]%*c", nome_cliente);
+        fgets (nome_cliente, 50, stdin);
+        nome_cliente[strcspn(nome_cliente, "\n")] = '\0';
+        to_lower_string(nome_cliente);
 
         printf ("Digite a descrição: ");
-        string_validation(descriptionPeca, 250);
-        to_lower_string(descriptionPeca);
+        string_validation(descricao_peca, 250);
+        to_lower_string(descricao_peca);
         
         printf ("Digite o valor da peça: ");
-        scanf ("%f", &pricePeca);
+        scanf ("%f", &preco_peca);
         getchar();
 
-        //printf ("\nDADOS DA VENDA\n O ID: %d.\n Descrição: %s.\n Valor: %.2f.\n Cliete: %s.\n", idPeca, descriptionPeca, pricePeca, clientName);
+        //printf ("\nDADOS DA VENDA\n O ID: %d.\n Descrição: %s.\n Valor: %.2f.\n Cliete: %s.\n", id_peca, descricao_peca, preco_peca, nome_cliente);
 
-        short installments = 1;
-        float installmentsValue = pricePeca;
-        char paymentMethod [11] = "a vista";
-        int paidInstallments = 1;
-        short remaining = 0;
+        short parcelas = 1;
+        float valor_parcelas = preco_peca;
+        char metodo_pagamento [11] = "a vista";
+        int parcelas_pagas = 1;
+        short valor_restante_pagar = 0;
 
-        insert_db(idPeca, clientName, descriptionPeca, pricePeca, paymentMethod, installments, paidInstallments, installmentsValue, remaining);
+        inserir_db(id_peca, nome_cliente, descricao_peca, preco_peca, metodo_pagamento, parcelas, parcelas_pagas, valor_parcelas, valor_restante_pagar);
 
         short options;
         printf ("\n0 - Voltar ao menu principal\n");
@@ -103,39 +103,39 @@ void credit_sale_menu() {
 
         printf ("\nMENU VENDA PARCELADA\n");
 
-        char idPeca [250];
-        char descriptionPeca[250];
-        float pricePeca;
-        char clientName[50];
+        char id_peca [250];
+        char descricao_peca[250];
+        float preco_peca;
+        char nome_cliente[50];
         
         getchar();
         printf ("Digite o ID da peça: ");
-        fgets (idPeca, 250, stdin);
-        idPeca[strcspn(idPeca, "\n")] = '\0';
+        fgets (id_peca, 250, stdin);
+        id_peca[strcspn(id_peca, "\n")] = '\0';
 
         printf ("Digite o nome do cliente: ");
-        //scanf ("%[^\n]%*c", clientName);
-        fgets (clientName, 50, stdin);
-        clientName[strcspn(clientName, "\n")] = '\0';
-        to_lower_string(clientName);
+        //scanf ("%[^\n]%*c", nome_cliente);
+        fgets (nome_cliente, 50, stdin);
+        nome_cliente[strcspn(nome_cliente, "\n")] = '\0';
+        to_lower_string(nome_cliente);
 
         printf ("Digite a descrição da peça: ");
-        string_validation(descriptionPeca, 250);
-        to_lower_string(descriptionPeca);
+        string_validation(descricao_peca, 250);
+        to_lower_string(descricao_peca);
         
         printf ("Digite o valor da peça: ");
-        scanf ("%f", &pricePeca);
+        scanf ("%f", &preco_peca);
         //getchar();
 
         printf ("Digite a quantidade de parcelas: ");
-        short installments = int_validation();
+        short parcelas = int_validation();
 
-        float installmentsValue = pricePeca / installments;
-        char paymentMethod [11] = "parcelado";
-        int paidInstallments = 0;
-        float remaining = pricePeca;
+        float valor_parcelas = preco_peca / parcelas;
+        char metodo_pagamento [11] = "parcelado";
+        int parcelas_pagas = 0;
+        float valor_restante_pagar = preco_peca;
 
-        insert_db(idPeca, clientName, descriptionPeca, pricePeca, paymentMethod, installments, paidInstallments, installmentsValue, remaining);
+        inserir_db(id_peca, nome_cliente, descricao_peca, preco_peca, metodo_pagamento, parcelas, parcelas_pagas, valor_parcelas, valor_restante_pagar);
 
         short options;
         printf ("\n0 - Voltar ao menu principal\n");

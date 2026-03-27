@@ -2,24 +2,25 @@
 #include <stdlib.h>
 #include "../include/db.h"
 
-int insert_db(
-    const char *idPeca, 
-    const char *clientName, 
-    const char *descriptionPeca, 
-    float pricePeca, 
-    const char *paymentMethod, 
-    int installments, 
-    int paidInstallments, 
-    float installmentsValue, 
-    float remaining) {
+int inserir_db(
+    const char *id_peca, 
+    const char *nome_cliente, 
+    const char *descricao_peca, 
+    float preco_peca, 
+    const char *metodo_pagamento, 
+    int parcelas, 
+    int parcelas_pagas, 
+    float valor_parcelas, 
+    float valor_restante_pagar) {
+
+    //printf ("\nDADOS DA VENDA\n O ID: %s.\n Cliente: %s.\n Descrição: %s.\n Valor: %.2f.\n Metodo de Pagamento: %s.\n Parcelas: %d.\n Parcelas Pagas: %d.\n Valor da Parcela: %.2f.\n Restante: %.2f.\n",
+     //    id_peca, nome_cliente, descricao_peca, preco_peca, metodo_pagamento, parcelas, parcelas_pagas, valor_parcelas, valor_restante_pagar);
 
     char comando[512];
 
     snprintf(comando, sizeof(comando),
-        "./scripts/database/insert.sh \"%s\" \"%s\" \"%s\" \"%f\" \"%s\" \"%d\" \"%d\" \"%f\" \"%f\"",
-        idPeca, clientName, descriptionPeca, pricePeca,
-        paymentMethod, installments, paidInstallments,
-        installmentsValue, remaining
+        "./scripts/database/insert.sh \"%s\" \"%s\" \"%s\" \"%.2f\" \"%s\" \"%d\" \"%d\" \"%.2f\" \"%.2f\"",
+        id_peca, nome_cliente, descricao_peca, preco_peca, metodo_pagamento, parcelas, parcelas_pagas, valor_parcelas, valor_restante_pagar
     );
 
     int returnCode = system(comando);

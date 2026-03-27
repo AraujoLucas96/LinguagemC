@@ -1,7 +1,7 @@
 #ifndef DB_H
 #define DB_H
 
-int insert_db(
+int inserir_db(
     const char *idPeca, 
     const char *clientName, 
     const char *descriptionPeca, 
