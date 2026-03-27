@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "db.h"
+#include "../include/db.h"
 
 int insert_db(
     const char *idPeca, 
@@ -16,7 +16,7 @@ int insert_db(
     char comando[512];
 
     snprintf(comando, sizeof(comando),
-        "../scripts/database/insert.sh \"%s\" \"%s\" \"%s\" \"%f\" \"%s\" \"%d\" \"%d\" \"%f\" \"%f\"",
+        "./scripts/database/insert.sh \"%s\" \"%s\" \"%s\" \"%f\" \"%s\" \"%d\" \"%d\" \"%f\" \"%f\"",
         idPeca, clientName, descriptionPeca, pricePeca,
         paymentMethod, installments, paidInstallments,
         installmentsValue, remaining

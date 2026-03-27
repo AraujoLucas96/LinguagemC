@@ -3,8 +3,8 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "Headers/control.h"
-#include "Headers/db.h"
+#include "../include/control.h"
+#include "../include/db.h"
 
 void main_menu();
 

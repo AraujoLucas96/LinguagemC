@@ -1,19 +1,23 @@
-# Nome do executável
-EXECUTAVEL = program
-
-# Arquivos fonte
-FONTES = program.c Headers/db.c
-
-# Compilador
 CC = gcc
+CFLAGS = -Iinclude -Wall -Wextra
 
-# Flags (opcional, mas recomendado)
-CFLAGS = -Wall -Wextra
+SRC_DIR = src
+BUILD_DIR = build
 
-all: $(EXECUTAVEL)
+SRC = $(wildcard $(SRC_DIR)/*.c)
+OBJ = $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRC))
 
-$(EXECUTAVEL): $(FONTES)
-	$(CC) $(FONTES) -o $(EXECUTAVEL) $(CFLAGS)
+OUT = $(BUILD_DIR)/Program
+
+all: $(OUT)
+
+$(OUT): $(OBJ)
+	$(CC) -o $@ $^
+
+# Regra para compilar .c → .o dentro de build/
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(BUILD_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(EXECUTAVEL)
+	rm -rf $(BUILD_DIR)
