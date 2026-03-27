@@ -1,20 +1,19 @@
-# Define o nome do seu executável
+# Nome do executável
 EXECUTAVEL = program
 
-# Define o nome do seu arquivo fonte
-FONTE = program.c
+# Arquivos fonte
+FONTES = program.c Headers/db.c
 
-# Define o caminho de inclusão (Header) e de biblioteca (Linker)
-# Como sabemos o caminho exato, podemos usá-lo diretamente
-INCLUDE_PATH = -I/usr/include/postgresql
-LIB_FLAG = -lpq
+# Compilador
+CC = gcc
 
-# O comando de compilação
+# Flags (opcional, mas recomendado)
+CFLAGS = -Wall -Wextra
+
 all: $(EXECUTAVEL)
 
-$(EXECUTAVEL): $(FONTE)
-	gcc $(FONTE) -o $(EXECUTAVEL) $(INCLUDE_PATH) $(LIB_FLAG)
+$(EXECUTAVEL): $(FONTES)
+	$(CC) $(FONTES) -o $(EXECUTAVEL) $(CFLAGS)
 
-# Comando para limpar os arquivos gerados (opcional, mas útil)
 clean:
 	rm -f $(EXECUTAVEL)

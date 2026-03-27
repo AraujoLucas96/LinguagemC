@@ -13,7 +13,7 @@ int int_validation() {
 return value;
 }
 
-void string_validation(char *value, int maxSize) {
+void string_validation(char *value, size_t maxSize) {
     char input[250];
     int check;
     

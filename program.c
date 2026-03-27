@@ -17,7 +17,7 @@ void stop_program() {
 }
 
 
-const char *filename = "dbfile";
+const char *filename = "database/dbfile";
 FILE *file;
 
 int check_file() {
@@ -50,7 +50,6 @@ void cash_sale_menu() {
 
         getchar();
         printf ("Digite o ID da peça: ");
-        //int idPeca = int_validation();
         fgets (idPeca, 250, stdin);
         idPeca[strcspn(idPeca, "\n")] = '\0';
 
@@ -86,6 +85,7 @@ void cash_sale_menu() {
         switch (options) {
                 case 0: 
                         main_menu();
+                        break;
 		case 10: 
 			stop_program();
 			break;
@@ -135,8 +135,6 @@ void credit_sale_menu() {
         int paidInstallments = 0;
         float remaining = pricePeca;
 
-        //printf ("Saldo devedor: %.2f", remaining);
-
         insert_db(idPeca, clientName, descriptionPeca, pricePeca, paymentMethod, installments, paidInstallments, installmentsValue, remaining);
 
         short options;
@@ -147,6 +145,7 @@ void credit_sale_menu() {
         switch (options) {
                 case 0: 
                         main_menu();
+                        break;
 		case 10: 
 			stop_program();
 			break;
@@ -173,10 +172,13 @@ void sales_menu() {
         switch (options) {
                 case 0:
                         main_menu();
+                        break;
                 case 1: 
                         cash_sale_menu();
+                        break;
                 case 2:
                         credit_sale_menu();
+                        break;
 		case 10: 
 			stop_program();
                         break;
@@ -184,6 +186,7 @@ void sales_menu() {
                        printf("Escolha uma opção válida\n");
                        sleep(1);
                        sales_menu();
+                       break;
 
         }
 }
@@ -214,6 +217,7 @@ void main_menu() {
                                 break;
 		        */case 10: 
 			        stop_program();
+                                break;
                         default:
                                 printf("Escolha uma opção válida. Voltando ao menu principal\n");
                                 sleep(1);
