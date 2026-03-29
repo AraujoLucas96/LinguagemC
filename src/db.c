@@ -13,10 +13,9 @@ int inserir_db(
     float valor_parcelas, 
     float valor_restante_pagar) {
 
-    //printf ("\nDADOS DA VENDA\n O ID: %s.\n Cliente: %s.\n Descrição: %s.\n Valor: %.2f.\n Metodo de Pagamento: %s.\n Parcelas: %d.\n Parcelas Pagas: %d.\n Valor da Parcela: %.2f.\n Restante: %.2f.\n",
-     //    id_peca, nome_cliente, descricao_peca, preco_peca, metodo_pagamento, parcelas, parcelas_pagas, valor_parcelas, valor_restante_pagar);
-
     char comando[512];
+
+    
 
     snprintf(comando, sizeof(comando),
         "./scripts/database/insert.sh \"%s\" \"%s\" \"%s\" \"%.2f\" \"%s\" \"%d\" \"%d\" \"%.2f\" \"%.2f\"",

@@ -11,13 +11,16 @@ dir_caminho_arquivo_db="$(realpath "$dir_script/../../database/$arquivo_db")"
 validar_db () {
    
     if [ ! -e "$dir_caminho_arquivo_db" ]; then
-        echo "Problemas ao inserir dados no banco. Arquivo de banco de dados não existe"
+        echo "Problemas ao inserir dados no banco. Arquivo de banco de dados não encontrado"
         return 1
     fi   
 }
 
 
 inserir_db () {
+
+    echo "Parado no sleep para testes"
+    sleep 500
 
     if [ $# -ne 9 ]; then 
         echo "Erro: parâmetros insuficientes"   
